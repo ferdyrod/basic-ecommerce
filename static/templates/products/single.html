@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="col-md-4">
+        <div class="row">
+            {% for image in product.productimage_set.all %}
+            {% if forloop.first %}
+                <div class="col-md-12">
+                    <img class="img-responsive" src="{{ MEDIA_URL }}{{ image }}">
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <hr/>
+        <div class="row">
+            {% for image in product.productimage_set.all %}
+                <div class="col-xs-4">
+                    <img class="img-responsive" src="{{ MEDIA_URL }}{{ image }}">
+                </div>
+            {% if forloop.counter|divisibleby:3 %}
+                </div>
+                 <div class="row">
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>{{ product }}
+                    <div class="fb-like" data-href="{{ request.url.get_full_path }}" data-width="200" data-layout="button_count" data-show-faces="false" data-send="false"></div>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-via="FerdyRod">Tweet</a>
+                    <div class="g-plusone"></div>
+                </h3>
+            </div>
+            <div class="col-md-3">
+                <form method="POST" action="/cart/add" class="pull-right">
+                    {% csrf_token %}
+                    <input type="hidden" name="slug" id="id_slug" value="{{ product.slug }}">
+                    <input type="number" name="quantity" id="id_quantity" value="1" required="required" placeholder="Qty" style="width:50px;float:left;">
+                    <input class=" btn btn-sm btn-default pull-right" type="submit" value="Add to Cart"></input>
+                </form>
+            </div>
+        </div>
+
+        <hr/>
+        <h4>{{ product.price }}</h4>
+        <p>{{ product.description }}</p>
+
+    </div>
+
+{% endblock content %}

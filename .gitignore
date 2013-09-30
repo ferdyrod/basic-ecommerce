@@ -1,0 +1,7 @@
+*.pyc
+*.sublime
+
+
+/.ropeproject/*
+/static/static-only/*
+/static/media/*
